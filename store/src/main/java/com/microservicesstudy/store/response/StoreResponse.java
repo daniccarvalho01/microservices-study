@@ -1,37 +1,20 @@
-package com.microservicesstudy.store.entities;
+package com.microservicesstudy.store.response;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "store")
-public class Store implements Serializable {
+public class StoreResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private LocalDate dateCreate;
     private LocalDate dateUpdate;
 
-    public Store() {
+    public StoreResponse() {
     }
 
-    public Store(Long id, String name, LocalDate dateCreate, LocalDate dateUpdate) {
-        this.id = id;
+    public StoreResponse(String name, LocalDate dateCreate, LocalDate dateUpdate) {
         this.name = name;
         this.dateCreate = dateCreate;
         this.dateUpdate = dateUpdate;
-    }
-
-    public Long getId() {
-
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -43,7 +26,6 @@ public class Store implements Serializable {
     }
 
     public LocalDate getDateCreate() {
-
         return dateCreate;
     }
 
@@ -52,7 +34,6 @@ public class Store implements Serializable {
     }
 
     public LocalDate getDateUpdate() {
-
         return dateUpdate;
     }
 

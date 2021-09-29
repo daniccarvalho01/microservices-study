@@ -2,6 +2,7 @@ package com.microservicesstudy.store.resources;
 
 import com.microservicesstudy.store.entities.Store;
 import com.microservicesstudy.store.request.StoreRequest;
+import com.microservicesstudy.store.response.StoreResponse;
 import com.microservicesstudy.store.services.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,16 @@ public class StoreResources {
 
     //ok
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Store> update(@PathVariable Long id, @RequestBody StoreRequest request){
+    public ResponseEntity<StoreResponse> update(@PathVariable Long id,
+                                                @RequestBody StoreRequest request){
         Store store = service.update(id, request);
-        return new ResponseEntity<>(store, HttpStatus.OK);
+
+        StoreResponse storeResponse = new StoreResponse();
+        storeResponse.setName(store.getName());
+        storeResponse.setDateCreate(store.getDateCreate());
+        storeResponse.setDateUpdate(store.getDateUpdate());
+
+        return new ResponseEntity<>(storeResponse, HttpStatus.OK);
     }
 
     //ok

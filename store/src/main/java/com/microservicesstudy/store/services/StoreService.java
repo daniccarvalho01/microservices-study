@@ -30,12 +30,14 @@ public class StoreService{
     }
 
     public Store update(Long id, StoreRequest request){
+
         Optional<Store> optionalStore = repository.findById(id);
         optionalStore.orElseThrow(() -> new ResourceNotFoundException(id));
+
         Store store = optionalStore.get();
         store.setName(request.getName());
         store.setDateCreate(request.getDateCreate());
-        store.getDateUpdate(request.getDateUpdate());
+        store.setDateUpdate(request.getDateUpdate());
 
         return repository.save(store);
     }
