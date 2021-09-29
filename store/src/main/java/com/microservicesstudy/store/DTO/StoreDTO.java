@@ -1,19 +1,20 @@
 package com.microservicesstudy.store.DTO;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class StoreDTO implements Serializable {
 
     private Long id;
     private String name;
-    private Date dateCreate;
-    private Date dateUpdate;
+    private LocalDate dateCreate;
+    private LocalDate dateUpdate;
 
     public StoreDTO() {
     }
 
-    public StoreDTO(Long id, String name, Date dateCreate, Date dateUpdate) {
+    public StoreDTO(Long id, String name, LocalDate dateCreate, LocalDate dateUpdate) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;
@@ -36,19 +37,19 @@ public class StoreDTO implements Serializable {
         this.name = name;
     }
 
-    public Date getDateCreate() {
+    public LocalDate getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(Date dateCreate) {
+    public void setDateCreate(LocalDate dateCreate) {
         this.dateCreate = dateCreate;
     }
 
-    public Date getDateUpdate() {
+    public LocalDate getDateUpdate() {
         return dateUpdate;
     }
 
-    public void setDateUpdate(Date dateUpdate) {
+    public void setDateUpdate(LocalDate dateUpdate) {
         this.dateUpdate = dateUpdate;
     }
 }
