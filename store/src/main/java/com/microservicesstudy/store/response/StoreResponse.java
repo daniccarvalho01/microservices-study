@@ -4,17 +4,24 @@ import java.time.LocalDate;
 
 public class StoreResponse {
 
+    private Long id;
     private String name;
-    private LocalDate dateCreate;
-    private LocalDate dateUpdate;
+
 
     public StoreResponse() {
     }
 
-    public StoreResponse(String name, LocalDate dateCreate, LocalDate dateUpdate) {
+    public StoreResponse(Long id, String name) {
+        this.id = id;
         this.name = name;
-        this.dateCreate = dateCreate;
-        this.dateUpdate = dateUpdate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,21 +30,5 @@ public class StoreResponse {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public LocalDate getDateCreate() {
-        return dateCreate;
-    }
-
-    public void setDateCreate(LocalDate dateCreate) {
-        this.dateCreate = dateCreate;
-    }
-
-    public LocalDate getDateUpdate() {
-        return dateUpdate;
-    }
-
-    public void setDateUpdate(LocalDate dateUpdate) {
-        this.dateUpdate = dateUpdate;
     }
 }

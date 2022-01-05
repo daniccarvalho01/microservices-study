@@ -36,13 +36,12 @@ public class StoreService{
 
         Store store = optionalStore.get();
         store.setName(request.getName());
-        store.setDateCreate(request.getDateCreate());
-        store.setDateUpdate(request.getDateUpdate());
 
         return repository.save(store);
     }
 
     public void delete(Long id){
+
         repository.deleteById(id);
     }
 
