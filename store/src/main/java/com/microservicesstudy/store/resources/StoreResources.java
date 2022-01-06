@@ -25,7 +25,7 @@ public class StoreResources {
 
     //ok
     @GetMapping
-    public ResponseEntity<List<Store>> findAll(){
+    public ResponseEntity<List<StoreResponse>> findAll(){
         List<Store> list = service.findAll();
 
 //        List<StoreResponse> storeResponseList = new ArrayList<>();

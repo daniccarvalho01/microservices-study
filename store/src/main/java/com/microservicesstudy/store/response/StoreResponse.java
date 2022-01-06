@@ -1,7 +1,5 @@
 package com.microservicesstudy.store.response;
 
-import java.time.LocalDate;
-
 public class StoreResponse {
 
     private Long id;

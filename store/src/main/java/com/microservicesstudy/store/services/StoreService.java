@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StoreService{
@@ -25,24 +24,29 @@ public class StoreService{
     }
 
     public Store findById(Long id){
-        Optional<Store> store = repository.findById(id);
-        return store.orElseThrow(() -> new ResourceNotFoundException(id));
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Store update(Long id, StoreRequest request){
 
-        Optional<Store> optionalStore = repository.findById(id);
-        optionalStore.orElseThrow(() -> new ResourceNotFoundException(id));
+//        Optional<Store> optionalStore = repository.findById(id);
+//        optionalStore.orElseThrow(() -> new ResourceNotFoundException(id));
+//
+//        Store store = optionalStore.get();
 
-        Store store = optionalStore.get();
+        Store store = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+
         store.setName(request.getName());
 
         return repository.save(store);
     }
 
     public void delete(Long id){
+        Store store = findById(id);
 
-        repository.deleteById(id);
+        repository.delete(store);
     }
 
 }
