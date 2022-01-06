@@ -1,4 +1,4 @@
-package com.microservicesstudy.store.request;
+package com.microservicesstudy.store.domain.request;
 
 import java.time.LocalDate;
 

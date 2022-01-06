@@ -1,4 +1,4 @@
-package com.microservicesstudy.store.response;
+package com.microservicesstudy.store.domain.response;
 
 public class StoreResponse {
 

@@ -1,6 +1,6 @@
-package com.microservicesstudy.store.repositories;
+package com.microservicesstudy.store.repository;
 
-import com.microservicesstudy.store.entities.Store;
+import com.microservicesstudy.store.domain.entity.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

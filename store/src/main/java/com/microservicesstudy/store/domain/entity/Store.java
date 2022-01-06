@@ -1,4 +1,4 @@
-package com.microservicesstudy.store.entities;
+package com.microservicesstudy.store.domain.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

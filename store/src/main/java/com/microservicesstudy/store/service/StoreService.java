@@ -1,9 +1,9 @@
-package com.microservicesstudy.store.services;
+package com.microservicesstudy.store.service;
 
-import com.microservicesstudy.store.entities.Store;
-import com.microservicesstudy.store.repositories.StoreRepository;
-import com.microservicesstudy.store.request.StoreRequest;
-import com.microservicesstudy.store.services.exceptions.ResourceNotFoundException;
+import com.microservicesstudy.store.domain.entity.Store;
+import com.microservicesstudy.store.repository.StoreRepository;
+import com.microservicesstudy.store.domain.request.StoreRequest;
+import com.microservicesstudy.store.domain.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.microservicesstudy.store.services.exceptions;
+package com.microservicesstudy.store.domain.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,7 +1,7 @@
-package com.microservicesstudy.store.mapper;
+package com.microservicesstudy.store.domain.mapper;
 
-import com.microservicesstudy.store.entities.Store;
-import com.microservicesstudy.store.response.StoreResponse;
+import com.microservicesstudy.store.domain.entity.Store;
+import com.microservicesstudy.store.domain.response.StoreResponse;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,10 +1,10 @@
-package com.microservicesstudy.store.resources;
+package com.microservicesstudy.store.resource;
 
-import com.microservicesstudy.store.entities.Store;
-import com.microservicesstudy.store.mapper.StoreMapper;
-import com.microservicesstudy.store.request.StoreRequest;
-import com.microservicesstudy.store.response.StoreResponse;
-import com.microservicesstudy.store.services.StoreService;
+import com.microservicesstudy.store.domain.entity.Store;
+import com.microservicesstudy.store.domain.mapper.StoreMapper;
+import com.microservicesstudy.store.domain.request.StoreRequest;
+import com.microservicesstudy.store.domain.response.StoreResponse;
+import com.microservicesstudy.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/stories")
-public class StoreResources {
+public class StoreResource {
 
     @Autowired
     StoreService service;
@@ -28,13 +28,20 @@ public class StoreResources {
     public ResponseEntity<List<StoreResponse>> findAll(){
         List<Store> list = service.findAll();
 
-//        List<StoreResponse> storeResponseList = new ArrayList<>();
-//
-//        for(Store store : list){
-//
-//        }
+        List<StoreResponse> storeResponseList = new ArrayList<>();
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        for(Store store : list){
+            StoreResponse storeResponse = storeMapper.toResponse(store);
+
+            storeResponseList.add(storeResponse);
+        }
+
+//        java8
+//        storeResponseList = list.stream()
+//                .map(store -> storeMapper.toResponse(store))
+//                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(storeResponseList, HttpStatus.OK);
     }
 
     //ok
