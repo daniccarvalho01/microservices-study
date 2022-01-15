@@ -1,11 +1,9 @@
 package com.microservicestudy.order.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Order implements Serializable {
@@ -13,18 +11,22 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long storeId;
+    private Long store;
     private LocalDate date;
     private String address;
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
 
     public Order() {
     }
 
-    public Order(Long id, Long storeId, LocalDate date, String address) {
+    public Order(Long id, Long store, LocalDate date, String address, List<OrderItem> items) {
         this.id = id;
-        this.storeId = storeId;
+        this.store = store;
         this.date = date;
         this.address = address;
+        this.items = items;
     }
 
     public Long getId() {
@@ -35,12 +37,12 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Long getStoreId() {
-        return storeId;
+    public Long getStore() {
+        return store;
     }
 
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
+    public void setStore(Long store) {
+        this.store = store;
     }
 
     public LocalDate getDate() {
@@ -57,5 +59,13 @@ public class Order implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }
