@@ -1,12 +1,12 @@
 package com.microservicestudy.order.service;
 
 import com.microservicestudy.order.domain.entity.Order;
-import com.microservicestudy.order.domain.exception.ResourceNotFoundException;
+import com.microservicestudy.order.domain.entity.OrderItem;
+import com.microservicestudy.order.domain.request.AddOrderAndOrderItemRequest;
+import com.microservicestudy.order.repository.OrderItemRepository;
 import com.microservicestudy.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class OrderService {
@@ -14,26 +14,21 @@ public class OrderService {
     @Autowired
     private OrderRepository repository;
 
-    public Order findById(Long id){
-        Order order = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+    @Autowired
+    private OrderItemRepository itemRepository;
 
-        return order;
-    }
+    public OrderItem addItem(Integer product, AddOrderAndOrderItemRequest request){
 
-    public List<Order> findAll(){
-
-        return repository.findAll();
-    }
-
-    public Order insert(Order order){
-
-        return repository.save(order);
-    }
-
-    public void delete(Long id){
-        Order order = findById(id);
-
+        Order order = new Order();
+        order.setStore(request.getStore());
+        order.setAddress(request.getAddress());
         repository.save(order);
+
+        OrderItem orderItem = new OrderItem();
+
+
+
+        return itemRepository.save(orderItem);
+
     }
 }
