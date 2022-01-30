@@ -1,7 +1,6 @@
 package com.microservicestudy.order.resource;
 
 import com.microservicestudy.order.domain.entity.Order;
-import com.microservicestudy.order.domain.mapper.OrderItemMapper;
 import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.response.OrderResponse;

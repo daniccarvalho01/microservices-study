@@ -2,6 +2,8 @@ package com.microservicestudy.order.domain.mapper;
 
 import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.entity.OrderItem;
+import com.microservicestudy.order.domain.request.OrderItemRequest;
+import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.response.OrderItemResponse;
 import com.microservicestudy.order.response.OrderResponse;
 import org.springframework.stereotype.Component;
@@ -24,5 +26,26 @@ public class OrderMapper {
         }
 
         return orderResponse;
+    }
+
+    public static Order toEntity(OrderRequest request){
+        Order order = new Order();
+
+        order.setStore(request.getStore());
+        order.setAddress(request.getAddress());
+
+        order.setItems(new ArrayList<>());
+        for (OrderItemRequest item : request.getItems()) {
+            OrderItem orderItem = new OrderItem();
+
+            orderItem.setOrder(order);
+            orderItem.setProduct(item.getProduct());
+            orderItem.setQuantity(item.getQuantity());
+            orderItem.setPrice(item.getPrice());
+
+            order.getItems().add(orderItem);
+        }
+
+        return order;
     }
 }
