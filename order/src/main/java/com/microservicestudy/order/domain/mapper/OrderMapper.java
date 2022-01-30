@@ -6,14 +6,11 @@ import com.microservicestudy.order.domain.request.OrderItemRequest;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.response.OrderItemResponse;
 import com.microservicestudy.order.response.OrderResponse;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 
-
 public class OrderMapper {
 
-    @Bean
     public static OrderResponse toResponse(Order order) {
         OrderResponse orderResponse = new OrderResponse();
 
@@ -29,7 +26,7 @@ public class OrderMapper {
         return orderResponse;
     }
 
-    @Bean
+
     public static Order toEntity(OrderRequest request){
         Order order = new Order();
 
