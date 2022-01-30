@@ -20,9 +20,6 @@ public class OrderResource {
     @Autowired
     OrderService service;
 
-    @Autowired
-    OrderMapper orderMapper;
-
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody OrderRequest request){
@@ -47,7 +44,7 @@ public class OrderResource {
         List<OrderResponse> orderResponseList = new ArrayList<>();
 
         for(Order order : list){
-            OrderResponse storeResponse = orderMapper.toResponse(order);
+            OrderResponse storeResponse = OrderMapper.toResponse(order);
 
             orderResponseList.add(storeResponse);
         }

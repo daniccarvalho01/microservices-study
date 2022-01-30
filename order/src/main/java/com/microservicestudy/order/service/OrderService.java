@@ -16,8 +16,7 @@ public class OrderService {
     @Autowired
     private OrderRepository repository;
 
-    @Autowired
-    private OrderMapper orderMapper;
+
 
     public void create(OrderRequest request) {
         Order order = OrderMapper.toEntity(request);
