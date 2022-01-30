@@ -3,6 +3,7 @@ package com.microservicestudy.order.domain.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "order_item")
 public class OrderItem {
 
     @Id
@@ -12,8 +13,12 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @Column(name = "product_id")
     private Integer product;
     private Integer quantity;
+
+    @Column(name = "unit_price")
     private Double price;
 
     public OrderItem() {

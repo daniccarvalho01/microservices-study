@@ -1,18 +1,19 @@
-package com.microservicestudy.order.domain.request;
+package com.microservicestudy.order.response;
+
 
 import java.util.List;
 
-public class OrderRequest {
+public class OrderResponse {
 
     private Long store;
     private String address;
 
-    private List<OrderItemRequest> items;
+    private List<OrderItemResponse> items;
 
-    public OrderRequest() {
+    public OrderResponse() {
     }
 
-    public OrderRequest(Long store, String address, List<OrderItemRequest> items) {
+    public OrderResponse(Long store, String address, List<OrderItemResponse> items) {
         this.store = store;
         this.address = address;
         this.items = items;
@@ -34,11 +35,11 @@ public class OrderRequest {
         this.address = address;
     }
 
-    public List<OrderItemRequest> getItems() {
+    public List<OrderItemResponse> getItems() {
         return items;
     }
 
-    public void setItems(List<OrderItemRequest> items) {
+    public void setItems(List<OrderItemResponse> items) {
         this.items = items;
     }
 }
