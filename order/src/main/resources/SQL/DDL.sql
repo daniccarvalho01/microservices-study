@@ -4,7 +4,7 @@ use  db_order;
 create table orders(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
     store_id int not null,
-	date date not null,
+	date_create date not null,
     address varchar(250) not null
 );
 
