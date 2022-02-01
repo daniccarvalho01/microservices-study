@@ -30,11 +30,6 @@ public class StoreService{
 
     public Store update(Long id, StoreRequest request){
 
-//        Optional<Store> optionalStore = repository.findById(id);
-//        optionalStore.orElseThrow(() -> new ResourceNotFoundException(id));
-//
-//        Store store = optionalStore.get();
-
         Store store = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
