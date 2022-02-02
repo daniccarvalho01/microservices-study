@@ -1,5 +1,8 @@
 package com.microservicesstudy.store.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -7,6 +10,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "store")
 public class Store implements Serializable {
@@ -20,49 +26,4 @@ public class Store implements Serializable {
     @UpdateTimestamp
     private LocalDate dateUpdate;
 
-    
-    public Store() {
-    }
-
-    public Store(Long id, String name, LocalDate dateCreate, LocalDate dateUpdate) {
-        this.id = id;
-        this.name = name;
-        this.dateCreate = dateCreate;
-        this.dateUpdate = dateUpdate;
-    }
-
-    public Long getId() {
-
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDateCreate() {
-
-        return dateCreate;
-    }
-
-    public void setDateCreate(LocalDate dateCreate) {
-        this.dateCreate = dateCreate;
-    }
-
-    public LocalDate getDateUpdate() {
-
-        return dateUpdate;
-    }
-
-    public void setDateUpdate(LocalDate dateUpdate) {
-        this.dateUpdate = dateUpdate;
-    }
 }
