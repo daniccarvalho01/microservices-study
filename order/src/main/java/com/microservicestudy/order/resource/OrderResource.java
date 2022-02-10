@@ -3,12 +3,16 @@ package com.microservicestudy.order.resource;
 import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
-import com.microservicestudy.order.response.OrderResponse;
+import com.microservicestudy.order.domain.response.OrderResponse;
+import com.microservicestudy.order.domain.response.StoreResponse;
 import com.microservicestudy.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,23 @@ public class OrderResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<OrderResponse> findById(@PathVariable Long id){
         Order order = service.findOrder(id);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+//        String storeResourceUrl
+//                = "http://localhost:8080/stores";
+//
+//        ResponseEntity<String> response =
+//                restTemplate.getForEntity(storeResourceUrl + "/1", String.class);
+//        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+
+        UriComponents uri = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost:8080")
+                .path("stores")
+                .build();
+
+        restTemplate.getForEntity(uri.toUriString(), StoreResponse.class);
 
         OrderResponse orderResponse = OrderMapper.toResponse(order);
 
