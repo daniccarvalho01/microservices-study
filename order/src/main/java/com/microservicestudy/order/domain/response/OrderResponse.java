@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class OrderResponse {
 
     private Long id;

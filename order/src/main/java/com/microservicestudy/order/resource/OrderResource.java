@@ -1,6 +1,7 @@
 package com.microservicestudy.order.resource;
 
 import com.microservicestudy.order.domain.entity.Order;
+import com.microservicestudy.order.domain.exception.ResourceNotFoundException;
 import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.domain.response.OrderResponse;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,27 +32,27 @@ public class OrderResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<OrderResponse> findById(@PathVariable Long id){
+    public ResponseEntity<OrderResponse> findById(@PathVariable Long id) {
         Order order = service.findOrder(id);
 
-        RestTemplate restTemplate = new RestTemplate();
+        StoreResponse storeResponse;
+        try {
+            RestTemplate restTemplate = new RestTemplate();
 
-//        String storeResourceUrl
-//                = "http://localhost:8080/stores";
-//
-//        ResponseEntity<String> response =
-//                restTemplate.getForEntity(storeResourceUrl + "/1", String.class);
-//        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
+            String storeResourceUrl = "http://localhost:8080/stores/{id}";
 
-        UriComponents uri = UriComponentsBuilder.newInstance()
-                .scheme("http")
-                .host("localhost:8080")
-                .path("stores")
-                .build();
+            ResponseEntity<StoreResponse> storeResponseEntity =
+                    restTemplate.getForEntity(storeResourceUrl,
+                            StoreResponse.class, order.getStore());
 
-        restTemplate.getForEntity(uri.toUriString(), StoreResponse.class);
+            storeResponse = storeResponseEntity.getBody();
 
-        OrderResponse orderResponse = OrderMapper.toResponse(order);
+        } catch (Exception ex) {
+            storeResponse = new StoreResponse();
+            storeResponse.setId(order.getStore());
+        }
+
+        OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
 
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
@@ -65,7 +64,7 @@ public class OrderResource {
         List<OrderResponse> orderResponseList = new ArrayList<>();
 
         for(Order order : list){
-            OrderResponse storeResponse = OrderMapper.toResponse(order);
+            OrderResponse storeResponse = OrderMapper.toResponse(order, null);// TODO CORRIGIR
 
             orderResponseList.add(storeResponse);
         }

@@ -4,28 +4,28 @@ import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.entity.OrderItem;
 import com.microservicestudy.order.domain.request.OrderItemRequest;
 import com.microservicestudy.order.domain.request.OrderRequest;
-import com.microservicestudy.order.response.OrderItemResponse;
-import com.microservicestudy.order.response.OrderResponse;
+import com.microservicestudy.order.domain.response.OrderItemResponse;
+import com.microservicestudy.order.domain.response.OrderResponse;
+import com.microservicestudy.order.domain.response.StoreResponse;
 
 import java.util.ArrayList;
 
 public class OrderMapper {
 
-    public static OrderResponse toResponse(Order order) {
+    public static OrderResponse toResponse(Order order, StoreResponse storeResponse) {
         OrderResponse orderResponse = new OrderResponse();
 
-        orderResponse.setStore(order.getStore());
+        orderResponse.setStore(storeResponse);
         orderResponse.setAddress(order.getAddress());
         orderResponse.setItems(new ArrayList<>());
-        for (OrderItem item : order.getItems()) {
 
+        for (OrderItem item : order.getItems()) {
             OrderItemResponse orderItemResponse = OrderItemMapper.toResponse(item);
             orderResponse.getItems().add(orderItemResponse);
         }
 
         return orderResponse;
     }
-
 
     public static Order toEntity(OrderRequest request){
         Order order = new Order();
