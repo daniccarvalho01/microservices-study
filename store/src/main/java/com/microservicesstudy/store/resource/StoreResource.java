@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/stories")
+@RequestMapping(value = "/stores")
 public class StoreResource {
 
     @Autowired
