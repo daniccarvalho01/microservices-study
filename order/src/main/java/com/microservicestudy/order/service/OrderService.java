@@ -29,8 +29,8 @@ public class OrderService {
         Order order = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        OrderResponse orderResponse = new OrderResponse();
-        order.setStore(orderResponse.getStore().getId());
+//        OrderResponse orderResponse = new OrderResponse();
+//        order.setStore(orderResponse.getStore().getId());
 
         return order;
     }

@@ -63,12 +63,26 @@ public class OrderResource {
 
         List<OrderResponse> orderResponseList = new ArrayList<>();
 
-        for(Order order : list){
-            OrderResponse storeResponse = OrderMapper.toResponse(order, null);// TODO CORRIGIR
+        for(Order order : list) {
+            StoreResponse storeResponse;
+            try {
+                RestTemplate restTemplate = new RestTemplate();
 
-            orderResponseList.add(storeResponse);
+                String storeResourceUrl = "http://localhost:8080/stores/{id}";
+
+                ResponseEntity<StoreResponse> storeResponseEntity =
+                        restTemplate.getForEntity(storeResourceUrl,
+                                StoreResponse.class, order.getStore());
+
+                storeResponse = storeResponseEntity.getBody();
+
+                OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
+                orderResponseList.add(orderResponse);
+            } catch (Exception ex) {
+                storeResponse = new StoreResponse();
+                storeResponse.setId(order.getStore());
+            }
         }
-
         return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
     }
 

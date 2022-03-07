@@ -15,6 +15,7 @@ public class OrderMapper {
     public static OrderResponse toResponse(Order order, StoreResponse storeResponse) {
         OrderResponse orderResponse = new OrderResponse();
 
+        orderResponse.setId(order.getId());
         orderResponse.setStore(storeResponse);
         orderResponse.setAddress(order.getAddress());
         orderResponse.setItems(new ArrayList<>());
