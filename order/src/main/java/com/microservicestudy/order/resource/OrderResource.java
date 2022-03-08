@@ -1,17 +1,16 @@
 package com.microservicestudy.order.resource;
 
 import com.microservicestudy.order.domain.entity.Order;
-import com.microservicestudy.order.domain.exception.ResourceNotFoundException;
 import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.domain.response.OrderResponse;
 import com.microservicestudy.order.domain.response.StoreResponse;
 import com.microservicestudy.order.service.OrderService;
+import com.microservicestudy.order.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,9 @@ public class OrderResource {
 
     @Autowired
     OrderService service;
+
+    @Autowired
+    StoreService storeService;
 
 
     @PostMapping
@@ -35,22 +37,7 @@ public class OrderResource {
     public ResponseEntity<OrderResponse> findById(@PathVariable Long id) {
         Order order = service.findOrder(id);
 
-        StoreResponse storeResponse;
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-
-            String storeResourceUrl = "http://localhost:8080/stores/{id}";
-
-            ResponseEntity<StoreResponse> storeResponseEntity =
-                    restTemplate.getForEntity(storeResourceUrl,
-                            StoreResponse.class, order.getStore());
-
-            storeResponse = storeResponseEntity.getBody();
-
-        } catch (Exception ex) {
-            storeResponse = new StoreResponse();
-            storeResponse.setId(order.getStore());
-        }
+        StoreResponse storeResponse = storeService.findStore(order);
 
         OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
 
@@ -64,25 +51,16 @@ public class OrderResource {
         List<OrderResponse> orderResponseList = new ArrayList<>();
 
         for(Order order : list) {
-            StoreResponse storeResponse;
-            try {
-                RestTemplate restTemplate = new RestTemplate();
 
-                String storeResourceUrl = "http://localhost:8080/stores/{id}";
+            StoreResponse storeResponse = storeService.findStore(order);
 
-                ResponseEntity<StoreResponse> storeResponseEntity =
-                        restTemplate.getForEntity(storeResourceUrl,
-                                StoreResponse.class, order.getStore());
+            OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
 
-                storeResponse = storeResponseEntity.getBody();
-
-                OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
-                orderResponseList.add(orderResponse);
-            } catch (Exception ex) {
-                storeResponse = new StoreResponse();
-                storeResponse.setId(order.getStore());
+            orderResponseList.add(orderResponse);
             }
-        }
+
+
+
         return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
     }
 

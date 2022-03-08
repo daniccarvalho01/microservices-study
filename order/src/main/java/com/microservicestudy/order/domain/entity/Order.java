@@ -1,6 +1,5 @@
 package com.microservicestudy.order.domain.entity;
 
-import com.microservicestudy.order.domain.response.StoreResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
