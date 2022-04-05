@@ -20,10 +20,10 @@ public class OrderMapper {
         orderResponse.setAddress(order.getAddress());
         orderResponse.setItems(new ArrayList<>());
 
-        for (OrderItem item : order.getItems()) {
+        order.getItems().forEach(item -> {
             OrderItemResponse orderItemResponse = OrderItemMapper.toResponse(item);
             orderResponse.getItems().add(orderItemResponse);
-        }
+        });
 
         return orderResponse;
     }
