@@ -1,4 +1,4 @@
-package com.microservicesstudy.store.domain.response;
+package com.microservicestudy.order.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

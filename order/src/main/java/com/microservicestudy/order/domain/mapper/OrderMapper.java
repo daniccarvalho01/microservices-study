@@ -4,28 +4,29 @@ import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.entity.OrderItem;
 import com.microservicestudy.order.domain.request.OrderItemRequest;
 import com.microservicestudy.order.domain.request.OrderRequest;
-import com.microservicestudy.order.response.OrderItemResponse;
-import com.microservicestudy.order.response.OrderResponse;
+import com.microservicestudy.order.domain.response.OrderItemResponse;
+import com.microservicestudy.order.domain.response.OrderResponse;
+import com.microservicestudy.order.domain.response.StoreResponse;
 
 import java.util.ArrayList;
 
 public class OrderMapper {
 
-    public static OrderResponse toResponse(Order order) {
+    public static OrderResponse toResponse(Order order, StoreResponse storeResponse) {
         OrderResponse orderResponse = new OrderResponse();
 
-        orderResponse.setStore(order.getStore());
+        orderResponse.setId(order.getId());
+        orderResponse.setStore(storeResponse);
         orderResponse.setAddress(order.getAddress());
         orderResponse.setItems(new ArrayList<>());
-        for (OrderItem item : order.getItems()) {
 
+        order.getItems().forEach(item -> {
             OrderItemResponse orderItemResponse = OrderItemMapper.toResponse(item);
             orderResponse.getItems().add(orderItemResponse);
-        }
+        });
 
         return orderResponse;
     }
-
 
     public static Order toEntity(OrderRequest request){
         Order order = new Order();
@@ -34,7 +35,7 @@ public class OrderMapper {
         order.setAddress(request.getAddress());
 
         order.setItems(new ArrayList<>());
-        for (OrderItemRequest item : request.getItems()) {
+        request.getItems().forEach(item -> {
             OrderItem orderItem = new OrderItem();
 
             orderItem.setOrder(order);
@@ -43,7 +44,7 @@ public class OrderMapper {
             orderItem.setPrice(item.getPrice());
 
             order.getItems().add(orderItem);
-        }
+        });
 
         return order;
     }

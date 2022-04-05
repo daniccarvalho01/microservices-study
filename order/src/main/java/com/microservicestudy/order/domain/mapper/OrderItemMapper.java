@@ -1,7 +1,7 @@
 package com.microservicestudy.order.domain.mapper;
 
 import com.microservicestudy.order.domain.entity.OrderItem;
-import com.microservicestudy.order.response.OrderItemResponse;
+import com.microservicestudy.order.domain.response.OrderItemResponse;
 import org.springframework.stereotype.Component;
 
 @Component
