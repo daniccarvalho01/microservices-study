@@ -35,7 +35,7 @@ public class OrderMapper {
         order.setAddress(request.getAddress());
 
         order.setItems(new ArrayList<>());
-        for (OrderItemRequest item : request.getItems()) {
+        request.getItems().forEach(item -> {
             OrderItem orderItem = new OrderItem();
 
             orderItem.setOrder(order);
@@ -44,7 +44,7 @@ public class OrderMapper {
             orderItem.setPrice(item.getPrice());
 
             order.getItems().add(orderItem);
-        }
+        });
 
         return order;
     }
