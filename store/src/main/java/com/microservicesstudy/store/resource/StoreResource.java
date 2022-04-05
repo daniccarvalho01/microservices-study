@@ -23,7 +23,6 @@ public class StoreResource {
     @Autowired
     StoreMapper storeMapper;
 
-    //ok
     @GetMapping
     public ResponseEntity<List<StoreResponse>> findAll(){
         List<Store> list = service.findAll();
@@ -44,7 +43,6 @@ public class StoreResource {
         return new ResponseEntity<>(storeResponseList, HttpStatus.OK);
     }
 
-    //ok
     @GetMapping(value = "/{id}")
     public ResponseEntity<StoreResponse> findById(@PathVariable Long id){
         Store store = service.findById(id);
@@ -54,7 +52,6 @@ public class StoreResource {
         return new ResponseEntity<>(storeResponse, HttpStatus.OK);
     }
 
-    //ok
     @PostMapping
     public ResponseEntity<StoreResponse> insert(@RequestBody StoreRequest request){
         Store store = new Store();
@@ -67,7 +64,6 @@ public class StoreResource {
         return new ResponseEntity<>(storeResponse, HttpStatus.CREATED);
     }
 
-    //ok
     @PutMapping(value = "/{id}")
     public ResponseEntity<StoreResponse> update(@PathVariable Long id,
                                                 @RequestBody StoreRequest request){
@@ -78,7 +74,6 @@ public class StoreResource {
         return new ResponseEntity<>(storeResponse, HttpStatus.OK);
     }
 
-    //ok
     @DeleteMapping(value ="/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         service.delete(id);
