@@ -57,17 +57,34 @@ public class OrderResource {
             OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
 
             orderResponseList.add(orderResponse);
-            }
+        }
 
+        return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
+    }
 
+    @GetMapping("/stores/{storeId}")
+    public ResponseEntity<List<OrderResponse>> findOrdersByStore(@PathVariable Long storeId){
+        List<Order> list = service.findOrdersByStore(storeId);
+
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+
+        for(Order order : list) {
+
+            StoreResponse storeResponse = storeService.findStore(order);
+
+            OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
+
+            orderResponseList.add(orderResponse);
+        }
 
         return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<OrderResponse> removeById(@PathVariable Long id){
-         service.delete(id);
+        service.delete(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

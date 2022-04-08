@@ -17,7 +17,6 @@ public class OrderService {
     private OrderRepository repository;
 
 
-
     public void create(OrderRequest request) {
         Order order = OrderMapper.toEntity(request);
 
@@ -40,4 +39,11 @@ public class OrderService {
         Order order = findOrder(id);
         repository.delete(order);
     }
+
+    public List<Order> findOrdersByStore(Long storeId) {
+        List<Order> orderList = repository.getOrdersByStore(storeId);
+
+        return orderList;
+    }
+
 }
