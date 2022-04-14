@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,20 +28,7 @@ public class StoreResource {
     public ResponseEntity<List<StoreResponse>> findAll(){
         log.info("findAll, inicio da busca");
 
-        List<Store> list = service.findAll();
-
-        List<StoreResponse> storeResponseList = new ArrayList<>();
-
-        for(Store store : list){
-            StoreResponse storeResponse = storeMapper.toResponse(store);
-
-            storeResponseList.add(storeResponse);
-        }
-
-//        java8
-//        storeResponseList = list.stream()
-//                .map(store -> storeMapper.toResponse(store))
-//                .collect(Collectors.toList());
+        List<StoreResponse> storeResponseList = service.findAll();
 
         return new ResponseEntity<>(storeResponseList, HttpStatus.OK);
     }
@@ -87,6 +73,7 @@ public class StoreResource {
         log.info("delete, inicio da exclusão, id={}", id);
 
         service.delete(id);
+
         return ResponseEntity.noContent().build();
     }
 }

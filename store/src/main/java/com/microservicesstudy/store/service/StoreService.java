@@ -11,6 +11,7 @@ import com.microservicesstudy.store.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,9 +30,21 @@ public class StoreService{
         return repository.save(store);
     }
 
-    public List<Store> findAll(){
+    public List<StoreResponse> findAll() {
+        List<Store> list = repository.findAll();
 
-        return repository.findAll();
+        List<StoreResponse> storeResponseList = new ArrayList<>();
+
+        for (Store store : list) {
+            StoreResponse storeResponse = storeMapper.toResponse(store);
+
+            List<OrderResponse> orderResponseList = orderClient.findLastOrdersByStore(store.getId());
+
+            storeResponse.setOrders(orderResponseList);
+            storeResponseList.add(storeResponse);
+        }
+
+        return storeResponseList;
     }
 
     public StoreResponse findById(Long id){
