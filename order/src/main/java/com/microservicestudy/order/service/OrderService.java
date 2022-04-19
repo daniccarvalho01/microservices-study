@@ -6,6 +6,7 @@ import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +42,8 @@ public class OrderService {
     }
 
     public List<Order> findOrdersByStore(Long storeId) {
-        List<Order> orderList = repository.getOrdersByStore(storeId);
+        PageRequest pageRequest = PageRequest.of(0,2);
+        List<Order> orderList = repository.getOrdersByStore(storeId, pageRequest);
 
         return orderList;
     }
