@@ -11,6 +11,6 @@ import java.util.List;
 public interface OrderClient {
 
     @GetMapping(value = "orders/stores/{storeId}")
-    List<OrderResponse> findLastOrdersByStore(@PathVariable Long storeId);
+    List<OrderResponse> findLastsByStore(@PathVariable Long storeId);
 
 }

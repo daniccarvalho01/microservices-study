@@ -8,6 +8,7 @@ import com.microservicesstudy.store.domain.request.StoreRequest;
 import com.microservicesstudy.store.domain.response.OrderResponse;
 import com.microservicesstudy.store.domain.response.StoreResponse;
 import com.microservicesstudy.store.repository.StoreRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,26 +36,40 @@ public class StoreService{
 
         List<StoreResponse> storeResponseList = new ArrayList<>();
 
-        for (Store store : list) {
-            StoreResponse storeResponse = storeMapper.toResponse(store);
+        StoreResponse storeResponse = new StoreResponse();
 
-            List<OrderResponse> orderResponseList = orderClient.findLastOrdersByStore(store.getId());
+        try{
+            for (Store store : list) {
+                storeResponse = storeMapper.toResponse(store);
 
-            storeResponse.setOrders(orderResponseList);
-            storeResponseList.add(storeResponse);
+                List<OrderResponse> orderResponseList = orderClient.findLastsByStore(store.getId());
+
+                storeResponse.setOrders(orderResponseList);
+                storeResponseList.add(storeResponse);
+            }
+        }catch (ResourceNotFoundException ex){
+            throw new ResourceNotFoundException(storeResponse.getId());
+
         }
 
         return storeResponseList;
     }
 
     public StoreResponse findById(Long id){
-        Store store =  repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+        StoreResponse storeResponse = new StoreResponse();
 
-        List<OrderResponse> orderResponseList = orderClient.findLastOrdersByStore(store.getId());
+        try{
+            Store store =  repository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        StoreResponse storeResponse = storeMapper.toResponse(store);
-        storeResponse.setOrders(orderResponseList);
+            List<OrderResponse> orderResponseList = orderClient.findLastsByStore(store.getId());
+
+            storeResponse = storeMapper.toResponse(store);
+            storeResponse.setOrders(orderResponseList);
+
+        } catch (ResourceNotFoundException ex){
+            throw new ResourceNotFoundException(id);
+        }
 
         return storeResponse;
     }
@@ -70,9 +85,8 @@ public class StoreService{
     }
 
     public void delete(Long id){
-        StoreResponse storeResponse = findById(id);
-
-        Store store = storeMapper.toEntity(storeResponse);
+        Store store = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
         repository.delete(store);
     }
