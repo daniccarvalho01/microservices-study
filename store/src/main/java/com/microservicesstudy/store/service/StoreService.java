@@ -8,13 +8,14 @@ import com.microservicesstudy.store.domain.request.StoreRequest;
 import com.microservicesstudy.store.domain.response.OrderResponse;
 import com.microservicesstudy.store.domain.response.StoreResponse;
 import com.microservicesstudy.store.repository.StoreRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class StoreService{
 
@@ -25,7 +26,7 @@ public class StoreService{
     private OrderClient orderClient;
 
     @Autowired
-    StoreMapper storeMapper;
+    private StoreMapper storeMapper;
 
     public Store insert(Store store){
         return repository.save(store);
@@ -36,40 +37,24 @@ public class StoreService{
 
         List<StoreResponse> storeResponseList = new ArrayList<>();
 
-        StoreResponse storeResponse = new StoreResponse();
+        for (Store store : list) {
+            StoreResponse storeResponse = storeMapper.toResponse(store);
 
-        try{
-            for (Store store : list) {
-                storeResponse = storeMapper.toResponse(store);
+            storeResponse.setOrders(findLastOrdersByStore(store.getId()));
 
-                List<OrderResponse> orderResponseList = orderClient.findLastsByStore(store.getId());
-
-                storeResponse.setOrders(orderResponseList);
-                storeResponseList.add(storeResponse);
-            }
-        }catch (ResourceNotFoundException ex){
-            throw new ResourceNotFoundException(storeResponse.getId());
-
+            storeResponseList.add(storeResponse);
         }
 
         return storeResponseList;
     }
 
     public StoreResponse findById(Long id){
-        StoreResponse storeResponse = new StoreResponse();
+        Store store =  repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
-        try{
-            Store store =  repository.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(id));
+        StoreResponse storeResponse = storeMapper.toResponse(store);
 
-            List<OrderResponse> orderResponseList = orderClient.findLastsByStore(store.getId());
-
-            storeResponse = storeMapper.toResponse(store);
-            storeResponse.setOrders(orderResponseList);
-
-        } catch (ResourceNotFoundException ex){
-            throw new ResourceNotFoundException(id);
-        }
+        storeResponse.setOrders(findLastOrdersByStore(store.getId()));
 
         return storeResponse;
     }
@@ -89,6 +74,15 @@ public class StoreService{
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
         repository.delete(store);
+    }
+
+    private List<OrderResponse> findLastOrdersByStore(Long storeId) {
+        try {
+            return orderClient.findLastsByStore(storeId);
+        } catch (Exception ex){
+            log.warn("findAll, Erro ao buscar as ultimas ordens, storeId={}", storeId);
+            return null;
+        }
     }
 
 }

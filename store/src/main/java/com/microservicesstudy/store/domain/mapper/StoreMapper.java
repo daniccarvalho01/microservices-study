@@ -16,13 +16,4 @@ public class StoreMapper {
         return storeResponse;
     }
 
-    public Store toEntity(StoreResponse response){
-        Store store = new Store();
-
-        store.setId(response.getId());
-        store.setName(response.getName());
-
-        return store;
-    }
-
 }
