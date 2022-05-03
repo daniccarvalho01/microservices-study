@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StoreResponse {
+public class OrderResponse {
 
-    private Long id;
-    private String name;
-    private List<OrderResponse> orders;
+    private String address;
+    private List<OrderItemResponse> items;
 
 }

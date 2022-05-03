@@ -6,6 +6,8 @@ import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,6 @@ public class OrderService {
 
     @Autowired
     private OrderRepository repository;
-
 
 
     public void create(OrderRequest request) {
@@ -40,4 +41,12 @@ public class OrderService {
         Order order = findOrder(id);
         repository.delete(order);
     }
+
+    public List<Order> findOrdersByStore(Long storeId) {
+        PageRequest pageRequest = PageRequest.of(0,2, Sort.by(Sort.Direction.DESC, "date"));
+        List<Order> orderList = repository.getOrdersByStore(storeId, pageRequest);
+
+        return orderList;
+    }
+
 }

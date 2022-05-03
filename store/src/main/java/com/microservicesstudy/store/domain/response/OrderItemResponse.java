@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StoreResponse {
+public class OrderItemResponse {
 
-    private Long id;
-    private String name;
-    private List<OrderResponse> orders;
-
+    private Integer product;
+    private Integer quantity;
+    private Double price;
 }
