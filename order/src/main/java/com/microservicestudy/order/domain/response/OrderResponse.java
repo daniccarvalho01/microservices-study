@@ -16,6 +16,7 @@ public class OrderResponse {
 
     private Long id;
     private StoreResponse store;
+    private CustomerResponse customer;
     private String address;
 
     private List<OrderItemResponse> items;
