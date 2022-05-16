@@ -1,7 +1,5 @@
 package com.microservicestudy.order.resource;
 
-import com.microservicestudy.order.domain.entity.Order;
-import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.domain.response.OrderResponse;
 import com.microservicestudy.order.service.CustomerService;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -62,18 +59,9 @@ public class OrderResource {
     public ResponseEntity<List<OrderResponse>> findOrdersByStore(@PathVariable Long storeId){
         log.info("findOrdersByStore, inicio da busca, id={}", storeId);
 
-        List<Order> list = service.findOrdersByStore(storeId);
+        List<OrderResponse> list = service.findOrdersByStore(storeId);
 
-        List<OrderResponse> orderResponseList = new ArrayList<>();
-
-        for(Order order : list) {
-
-            OrderResponse orderResponse = OrderMapper.toResponse(order, null, null);
-
-            orderResponseList.add(orderResponse);
-        }
-
-        return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

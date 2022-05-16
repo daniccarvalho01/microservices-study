@@ -23,10 +23,10 @@ public class OrderService {
     private OrderRepository repository;
 
     @Autowired
-    StoreService storeService;
+    private StoreService storeService;
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
 
     public void create(OrderRequest request) {
@@ -75,11 +75,21 @@ public class OrderService {
         repository.delete(order);
     }
 
-    public List<Order> findOrdersByStore(Long storeId) {
+    public List<OrderResponse> findOrdersByStore(Long storeId) {
         PageRequest pageRequest = PageRequest.of(0,2, Sort.by(Sort.Direction.DESC, "date"));
         List<Order> list = repository.getOrdersByStore(storeId, pageRequest);
 
-        return list;
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+
+        for(Order order : list) {
+            CustomerResponse customerResponse = customerService.getCustomer(order.getCustomerId());
+
+            OrderResponse orderResponse = OrderMapper.toResponse(order, customerResponse);
+
+            orderResponseList.add(orderResponse);
+        }
+
+        return orderResponseList;
     }
 
 }

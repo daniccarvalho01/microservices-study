@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 public class OrderMapper {
 
+    public static OrderResponse toResponse(Order order, CustomerResponse customerResponse) {
+        return toResponse(order, null, customerResponse);
+    }
+
     public static OrderResponse toResponse(Order order, StoreResponse storeResponse, CustomerResponse customerResponse) {
         OrderResponse orderResponse = new OrderResponse();
 
