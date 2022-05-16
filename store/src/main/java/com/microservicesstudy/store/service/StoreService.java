@@ -80,7 +80,7 @@ public class StoreService{
         try {
             return orderClient.findLastsByStore(storeId);
         } catch (Exception ex){
-            log.warn("findAll, Erro ao buscar as ultimas ordens, storeId={}", storeId);
+            log.warn("findLastOrdersByStore, Erro ao buscar as ultimas ordens, storeId={}", storeId);
             return null;
         }
     }
