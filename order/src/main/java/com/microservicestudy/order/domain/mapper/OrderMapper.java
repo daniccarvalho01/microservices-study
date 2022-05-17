@@ -2,8 +2,8 @@ package com.microservicestudy.order.domain.mapper;
 
 import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.entity.OrderItem;
-import com.microservicestudy.order.domain.request.OrderItemRequest;
 import com.microservicestudy.order.domain.request.OrderRequest;
+import com.microservicestudy.order.domain.response.CustomerResponse;
 import com.microservicestudy.order.domain.response.OrderItemResponse;
 import com.microservicestudy.order.domain.response.OrderResponse;
 import com.microservicestudy.order.domain.response.StoreResponse;
@@ -12,11 +12,16 @@ import java.util.ArrayList;
 
 public class OrderMapper {
 
-    public static OrderResponse toResponse(Order order, StoreResponse storeResponse) {
+    public static OrderResponse toResponse(Order order, CustomerResponse customerResponse) {
+        return toResponse(order, null, customerResponse);
+    }
+
+    public static OrderResponse toResponse(Order order, StoreResponse storeResponse, CustomerResponse customerResponse) {
         OrderResponse orderResponse = new OrderResponse();
 
         orderResponse.setId(order.getId());
         orderResponse.setStore(storeResponse);
+        orderResponse.setCustomer(customerResponse);
         orderResponse.setAddress(order.getAddress());
         orderResponse.setItems(new ArrayList<>());
 
@@ -32,6 +37,7 @@ public class OrderMapper {
         Order order = new Order();
 
         order.setStore(request.getStore());
+        order.setCustomerId(request.getCustomerId());
         order.setAddress(request.getAddress());
 
         order.setItems(new ArrayList<>());

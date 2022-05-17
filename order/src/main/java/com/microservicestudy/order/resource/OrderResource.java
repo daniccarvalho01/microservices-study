@@ -1,10 +1,8 @@
 package com.microservicestudy.order.resource;
 
-import com.microservicestudy.order.domain.entity.Order;
-import com.microservicestudy.order.domain.mapper.OrderMapper;
 import com.microservicestudy.order.domain.request.OrderRequest;
 import com.microservicestudy.order.domain.response.OrderResponse;
-import com.microservicestudy.order.domain.response.StoreResponse;
+import com.microservicestudy.order.service.CustomerService;
 import com.microservicestudy.order.service.OrderService;
 import com.microservicestudy.order.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +23,9 @@ public class OrderResource {
 
     @Autowired
     StoreService storeService;
+
+    @Autowired
+    CustomerService customerService;
 
 
     @PostMapping
@@ -41,11 +41,7 @@ public class OrderResource {
     public ResponseEntity<OrderResponse> findById(@PathVariable Long id) {
         log.info("findById, inicio da busca, id={}", id);
 
-        Order order = service.findOrder(id);
-
-        StoreResponse storeResponse = storeService.findStore(order);
-
-        OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
+        OrderResponse orderResponse = service.findOrder(id);
 
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
@@ -54,18 +50,7 @@ public class OrderResource {
     public ResponseEntity<List<OrderResponse>> findOrders(){
         log.info("findOrders, inicio da busca");
 
-        List<Order> list = service.findOrders();
-
-        List<OrderResponse> orderResponseList = new ArrayList<>();
-
-        for(Order order : list) {
-
-            StoreResponse storeResponse = storeService.findStore(order);
-
-            OrderResponse orderResponse = OrderMapper.toResponse(order, storeResponse);
-
-            orderResponseList.add(orderResponse);
-        }
+        List<OrderResponse> orderResponseList = service.findOrders();
 
         return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
     }
@@ -74,18 +59,9 @@ public class OrderResource {
     public ResponseEntity<List<OrderResponse>> findOrdersByStore(@PathVariable Long storeId){
         log.info("findOrdersByStore, inicio da busca, id={}", storeId);
 
-        List<Order> list = service.findOrdersByStore(storeId);
+        List<OrderResponse> list = service.findOrdersByStore(storeId);
 
-        List<OrderResponse> orderResponseList = new ArrayList<>();
-
-        for(Order order : list) {
-
-            OrderResponse orderResponse = OrderMapper.toResponse(order, null);
-
-            orderResponseList.add(orderResponse);
-        }
-
-        return new ResponseEntity<>(orderResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

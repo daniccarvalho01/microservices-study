@@ -13,6 +13,7 @@ public class OrderRequest {
 
     private Long store;
     private String address;
+    private Long customerId;
 
     private List<OrderItemRequest> items;
 

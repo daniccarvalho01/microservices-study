@@ -24,6 +24,9 @@ public class Order implements Serializable {
     @Column(name = "store_id")
     private Long store;
 
+    @Column(name= "customer_id")
+    private Long customerId;
+
     @CreationTimestamp
     @Column(name = "date_create")
     private LocalDate date;

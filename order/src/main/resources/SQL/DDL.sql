@@ -3,6 +3,7 @@ use  db_order;
 
 create table orders(
 	id int not null AUTO_INCREMENT PRIMARY KEY,
+    customer_id int not null,
     store_id int not null,
 	date_create date not null,
     address varchar(250) not null
