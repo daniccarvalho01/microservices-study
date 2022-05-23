@@ -2,6 +2,7 @@ package com.microservicestudy.order.service;
 
 import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.response.StoreResponse;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -9,7 +10,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class StoreService {
 
-    public StoreResponse findStore(Order order){
+    @Cacheable(cacheNames = "stores", key = "#order.getStore")
+    public StoreResponse findStore(Order order) {
 
         StoreResponse storeResponse;
         try {
