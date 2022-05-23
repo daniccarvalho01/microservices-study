@@ -2,7 +2,6 @@ package com.microservicestudy.order.service;
 
 import com.microservicestudy.order.domain.entity.Order;
 import com.microservicestudy.order.domain.response.StoreResponse;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -31,5 +30,4 @@ public class StoreService {
 
         return storeResponse;
     }
-
 }
