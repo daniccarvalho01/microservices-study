@@ -14,7 +14,6 @@ public class CustomerService {
     @Autowired
     private CustomerAPI customerAPI;
 
-    @Cacheable(cacheNames = "customer", key = "#customerId")
     public CustomerResponse getCustomer(Long customerId) {
 
         try {

@@ -10,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class StoreService {
 
-    @Cacheable(cacheNames = "stores", key = "#order.getStore")
     public StoreResponse findStore(Order order) {
 
         StoreResponse storeResponse;
