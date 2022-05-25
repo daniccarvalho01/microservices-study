@@ -14,6 +14,7 @@ public class CustomerService {
     private CustomerAPI customerAPI;
 
     public CustomerResponse getCustomer(Long customerId) {
+        log.info("getCustomer, iniciando busca por cliente, customerId={}", customerId);
 
         try {
             CustomerResponse customerResponse = customerAPI.findCustomer(customerId);
