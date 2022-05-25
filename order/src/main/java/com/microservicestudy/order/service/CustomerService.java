@@ -13,13 +13,15 @@ public class CustomerService {
     @Autowired
     private CustomerAPI customerAPI;
 
-    public CustomerResponse getCustomer(Long customerId){
-        try{
-            CustomerResponse customerResponse =  customerAPI.findCustomer(customerId);
+    public CustomerResponse getCustomer(Long customerId) {
+        log.info("getCustomer, iniciando busca por cliente, customerId={}", customerId);
+
+        try {
+            CustomerResponse customerResponse = customerAPI.findCustomer(customerId);
             customerResponse.setId(customerId);
             return customerResponse;
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             log.warn("getCustomer, Erro ao buscar o cliente, customerId={}", customerId);
             return null;
         }

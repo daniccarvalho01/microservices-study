@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class StoreService {
 
-    public StoreResponse findStore(Order order){
+    public StoreResponse findStore(Order order) {
 
         StoreResponse storeResponse;
         try {
@@ -30,5 +30,4 @@ public class StoreService {
 
         return storeResponse;
     }
-
 }
