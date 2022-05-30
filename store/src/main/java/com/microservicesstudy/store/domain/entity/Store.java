@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +23,8 @@ public class Store implements Serializable {
     private Long id;
     private String name;
     @CreationTimestamp
-    private LocalDate dateCreate;
+    private LocalDateTime dateCreate;
     @UpdateTimestamp
-    private LocalDate dateUpdate;
+    private LocalDateTime dateUpdate;
 
 }
