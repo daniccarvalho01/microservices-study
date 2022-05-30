@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -26,7 +27,7 @@ public class Order implements Serializable {
 
     @CreationTimestamp
     @Column(name = "date_create")
-    private LocalDate date;
+    private LocalDateTime date;
     private String address;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
